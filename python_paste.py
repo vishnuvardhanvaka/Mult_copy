@@ -4,12 +4,14 @@ from tqdm import tqdm
 import time
 
 def getpath(f):
-	tf=[f'{f}/*.jpg',f'{f}/*.zip']
+	tf=[f'{f}/*.jpg',f'{f}/*.zip',f'{f}/*.png',f'{f}/*.pdf',f'{f}/*.otf',f'{f}/*.ttf',f'{f}/*.mp3',f'{f}/*.mp4']
 	
 	dirs=os.listdir(f)
 	dirs=[f'{f}/{item}' for item in dirs]
+	
 	files = [file for t in [glob.glob(e) for e in tf] for file in t]
-	dirs=[dir for dir in dirs if dir not in files]
+	dirs=[dir for dir in dirs if dir not in files and '.' not in dir]
+	
 	for dir in dirs:
 		rt=getpath(dir)
 		if len(rt)!=0:
@@ -37,9 +39,10 @@ def createdir(d,savepath):
 	bar.close()	
 	print('Successfully files copied !')
 
-folder='All_files'
-save_as='copied_files'
+folder='ALL FONTS'
+save_as='EX FILES'
+print('Starting ...')
 files=getpath(folder)
+print(f'{len(files)} files detected ...')
 d=getdict(files)
 st=createdir(d,save_as)
-
